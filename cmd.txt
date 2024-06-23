@@ -5,4 +5,5 @@ uvicorn app:app --host='0.0.0.0' --port='9999' --reload=True
 部署模式：
 uvicorn app:app --host='0.0.0.0' --port='9999'
 
-file_archive
+# 调试界面
+http://127.0.0.1:9999/docs
