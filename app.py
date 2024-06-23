@@ -22,7 +22,14 @@ def read_root():
 
 # Define a POST endpoint
 @app.post("/data_source/")
-def create_item(response: Response, item: Item):
+def create_item(item: Item):
+    try:
+        # TODO
+        return server_state.return_success_info("hello, it's my message")
+        
+    except Exception as e:
+        import traceback; traceback.print_exc();
+        return server_state.return_fail_info("fail!", 500)
     
     
-    return server_state.return_success_info("hello, it's my message")
+    

@@ -16,15 +16,14 @@ class ServerState:
         self.request_count = 0
 
     def return_success_info(self, info: str = "Server is running smoothly") -> ServerInfo:
-
-        """Return information package
+        """成功消息
 
         Args:
-            response (Response): Request
+            info (str, optional): _description_. Defaults to "Server is running smoothly".
 
         Returns:
-            ServerInfo: Information object
-        """
+            ServerInfo: _description_
+        """        
         return ServerInfo(
             start_time=self.start_time,
             status_code=200,
@@ -36,14 +35,15 @@ class ServerState:
 
 
     def return_fail_info(self, info: str = "Server is running smoothly", status_code: int=500) -> ServerInfo:
-        """Return information package
+        """失败消息
 
         Args:
-            response (Response): Request
+            info (str, optional): 信息. Defaults to "Server is running smoothly".
+            status_code (int, optional): 状态码. Defaults to 500.
 
         Returns:
-            ServerInfo: Information object
-        """
+            ServerInfo: _description_
+        """        
         return ServerInfo(
             start_time=self.start_time,
             status_code=status_code,

@@ -1,2 +1,8 @@
 # 运行命令
+调试/开发模式：
 uvicorn app:app --host='0.0.0.0' --port='9999' --reload=True
+
+部署模式：
+uvicorn app:app --host='0.0.0.0' --port='9999'
+
+file_archive
