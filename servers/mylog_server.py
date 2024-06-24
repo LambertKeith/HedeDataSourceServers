@@ -6,7 +6,6 @@ import os
 
 
 
-
 class CustomLogger:
     def __init__(self, name='CustomLogger', log_file=r'logs\app.log'):
         self.logger = logging.getLogger(name)
