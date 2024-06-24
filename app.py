@@ -3,6 +3,8 @@ from pydantic import BaseModel
 import pytz
 from utils.returns_format import ServerState, ServerInfo
 from datetime import datetime
+from servers.mylog_server import CustomLogger, logger
+
 
 server_state = ServerState()
 app = FastAPI()
@@ -27,11 +29,11 @@ def read_root():
 def create_item(item: Item):
     try:
         # TODO
+        
         return server_state.return_success_info("hello, it's my message")
         
     except Exception as e:
         import traceback; traceback.print_exc();
         return server_state.return_fail_info("fail!", 500)
-    
     
     
