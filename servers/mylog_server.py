@@ -27,6 +27,10 @@ class CustomLogger:
             fh.setLevel(logging.DEBUG)
             fh.setFormatter(formatter)
             self.logger.addHandler(fh)
+        
+        # 装饰器-被装饰文件
+        self.decorated_filename = ""
+        self.decorated_lineno = ""
 
 
     def _log(self, level, message):      
@@ -34,6 +38,15 @@ class CustomLogger:
         filename = os.path.basename(frame.f_code.co_filename)
         lineno = frame.f_lineno
         log_message = f"[{logging.getLevelName(level)}]-[{self._current_time()}]-[{filename}]-[{lineno}]-[{message}]"
+        self.logger.log(level, log_message)
+
+
+    def _log_decoration(self, level, message):      
+
+        frame = inspect.currentframe().f_back.f_back
+        filename = os.path.basename(frame.f_code.co_filename)
+        lineno = frame.f_lineno
+        log_message = f"[{logging.getLevelName(level)}]-[{self._current_time()}]-[{self.decorated_filename}]-[{self.decorated_lineno}]-[{message}]"
         self.logger.log(level, log_message)
         
 
@@ -55,6 +68,10 @@ class CustomLogger:
 
     def critical(self, message):
         self._log(logging.CRITICAL, message)
+    
+
+    def decoration_info(self, message):
+        self._log_decoration(logging.INFO, message)
         
 
     def _current_time(self):
@@ -73,12 +90,12 @@ class CustomLogger:
         def wrapper(*args, **kwargs):
             func_name = func.__name__
             frame = inspect.currentframe().f_back
-            filename = os.path.basename(frame.f_code.co_filename)
-            lineno = frame.f_lineno
+            self.decorated_filename = os.path.basename(frame.f_code.co_filename)
+            self.decorated_lineno = frame.f_lineno
             params = inspect.signature(func).bind(*args, **kwargs).arguments
-            self.info(f"{func_name} - 入参: {params}")
+            self.decoration_info(f"{func_name} - 入参: {params}")
             result = func(*args, **kwargs)
-            self.info(f"{func_name} - 出参: {result}")
+            self.decoration_info(f"{func_name} - 出参: {result}")
             return result
         return wrapper
 

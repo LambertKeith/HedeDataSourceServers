@@ -1,4 +1,5 @@
 # 数据库写入
+from .mylog_server import logger
 
 
 class DBWritor:

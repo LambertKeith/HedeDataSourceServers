@@ -1,4 +1,5 @@
 # 文件存档
+from .mylog_server import logger
 
 
 
