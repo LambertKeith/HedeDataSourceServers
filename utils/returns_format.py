@@ -4,16 +4,21 @@ from datetime import datetime
 from typing import Dict, Any
 import pytz
 
+
+
 class ServerInfo(BaseModel):
     start_time: datetime
     status_code: int
     headers: Dict[str, Any]
     details: Dict[str, Any]
 
+
+
 class ServerState:
     def __init__(self):
         self.start_time = datetime.now(pytz.utc)
         self.request_count = 0
+
 
     def return_success_info(self, info: str = "Server is running smoothly") -> ServerInfo:
         """成功消息
