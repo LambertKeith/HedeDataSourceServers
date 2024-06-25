@@ -42,7 +42,6 @@ class CustomLogger:
 
 
     def _log_decoration(self, level, message):      
-
         frame = inspect.currentframe().f_back.f_back
         filename = os.path.basename(frame.f_code.co_filename)
         lineno = frame.f_lineno
