@@ -26,7 +26,7 @@ def read_root():
 
 # Define a POST endpoint
 @app.post("/data_source/")
-def create_item(item: Item):
+def create_item():
     try:
         # TODO
 
