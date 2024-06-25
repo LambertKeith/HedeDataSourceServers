@@ -29,7 +29,7 @@ def read_root():
 def create_item(item: Item):
     try:
         # TODO
-        
+
         return server_state.return_success_info("hello, it's my message")
         
     except Exception as e:
