@@ -17,8 +17,7 @@ class DataPreprocessor:
         file_ext = os.path.splitext(self.file_name)[1]
         if file_ext == '.xls':
             head_row = self.findHead_row()
-            self.delete_null_rows(head_row)b
-
+            self.delete_null_rows(head_row)
 
     def copy_convert_excel(self):
         file_ext = os.path.splitext(self.file_name)[1]
@@ -36,8 +35,9 @@ class DataPreprocessor:
 
     def findHead_row(self):
         output_file_path = os.path.join(self.out_put_folder, self.output_file_name)
+        print("output_file_path", output_file_path)
         df = pd.read_excel(output_file_path)
-        print(df.head())
+        print("here", df.head())
         count = 0
         for index, row in df.iterrows():
             print(index)
