@@ -17,8 +17,7 @@ class DataPreprocessor:
         file_ext = os.path.splitext(self.file_name)[1]
         if file_ext == '.xls':
             head_row = self.findHead_row()
-            self.delete_null_rows(head_row)b
-
+            self.delete_null_rows(head_row)
 
     def copy_convert_excel(self):
         file_ext = os.path.splitext(self.file_name)[1]
