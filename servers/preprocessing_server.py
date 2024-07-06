@@ -2,6 +2,7 @@
 import os
 # from .mylog_server import logger
 import pandas as pd
+import win32com.client as win32
 import xlrd
 from openpyxl.utils.exceptions import InvalidFileException
 
@@ -23,16 +24,21 @@ class DataPreprocessor:
         file_ext = os.path.splitext(self.file_name)[1]
         print(file_ext)
         xls_file = self.file_path
-        self.df = pd.read_excel(xls_file, sheet_name=None)  # 读取所有的 sheet
-        # 构建输出文件的完整路径
+        # self.df = pd.read_excel(xls_file, sheet_name=None)  # 读取所有的 sheet
+        # # 构建输出文件的完整路径
         output_file_path = os.path.join(self.out_put_folder, self.output_file_name)
-        # 将数据写入 .xlsx 文件
-        with pd.ExcelWriter(output_file_path, engine='openpyxl') as writer:
-            for sheet_name, sheet_df in self.df.items():
-                sheet_df.to_excel(writer, sheet_name='sheet1', index=False)
-        print(f'{xls_file} 转换为 {output_file_path} 完成。')
-        print(f"处理后的文件保存到：{output_file_path}")
-
+        # # 将数据写入 .xlsx 文件
+        # with pd.ExcelWriter(output_file_path, engine='openpyxl') as writer:
+        #     for sheet_name, sheet_df in self.df.items():
+        #         sheet_df.to_excel(writer, sheet_name='sheet1', index=False)
+        # print(f'{xls_file} 转换为 {output_file_path} 完成。')
+        # print(f"处理后的文件保存到：{output_file_path}")
+        excel = win32.gencache.EnsureDispatch('Excel.Application')
+        wb = excel.Workbooks.Open(os.path.abspath(xls_file))
+        wb.SaveAs(os.path.abspath(output_file_path), FileFormat=51)
+        wb.Close()
+        excel.Application.Quit()
+        
     def findHead_row(self):
         output_file_path = os.path.join(self.out_put_folder, self.output_file_name)
         print("output_file_path", output_file_path)
