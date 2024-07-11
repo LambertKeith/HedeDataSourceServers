@@ -60,7 +60,7 @@ ujson==5.10.0
 uvicorn==0.30.1
 watchfiles==0.22.0
 wcwidth==0.2.13
-websockets==12.0e
+websockets
 t-xmlfile==1.1.0
 
 greenlet==3.0.3
