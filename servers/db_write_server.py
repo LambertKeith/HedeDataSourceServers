@@ -1,3 +1,4 @@
+import openpyxl
 import pandas as pd
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy import Table, Column
@@ -20,7 +21,7 @@ class TableInserter:
 
     def read_excel_to_df(self):
         try:
-            print("wenjianm", self.file_path)
+            print("file", self.file_path)
             self.df = pd.read_excel(self.file_path)
             self.df.columns = self.df.columns.astype(str).str.strip()
             print("Excel文件读取成功！")
