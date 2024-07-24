@@ -52,15 +52,15 @@ class TableInserter:
                 self.metadata.create_all(self.engine)
 
                 #分批插入数据
-                batch_size = 10000
                 try:
+                    batch_size = 10000
                     total_rows = self.df.shape[0]
                     inserted_rows = 0
                     with self.engine.begin() as conn:
                         for start_row in range(0, total_rows, batch_size):
                             end_row = min(start_row + batch_size, total_rows)
                             batch_df = self.df.iloc[start_row:end_row]
-                            batch_df.to_sql(table_name, self.engine, if_exists='append', index=False, dtype=dtype, chunksize=1000)
+                            batch_df.to_sql(table_name, self.engine, if_exists='replace', index=False, dtype=dtype, chunksize=1000)
                             print(f'Inserted rows {start_row} to {end_row} into database.')
                             inserted_rows += len(batch_df)
                         if inserted_rows == total_rows:

@@ -14,10 +14,8 @@ class DataPreprocessor:
 
     def preprocess(self):
         self.copy_convert_excel()
-        file_ext = os.path.splitext(self.file_name)[1]
-        if file_ext == '.xls':
-            head_row = self.findHead_row()
-            self.delete_null_rows(head_row)
+        head_row = self.findHead_row()
+        self.delete_null_rows(head_row)
 
     def copy_convert_excel(self):
         file_ext = os.path.splitext(self.file_name)[1]
@@ -29,6 +27,10 @@ class DataPreprocessor:
 
         excel = win32.gencache.EnsureDispatch('Excel.Application')
         wb = excel.Workbooks.Open(os.path.abspath(xls_file))
+        # 如果excel存在，删除
+        if os.path.exists(output_file_path):
+            os.remove(output_file_path)
+        # 保存新excel
         wb.SaveAs(os.path.abspath(output_file_path), FileFormat=51)
         wb.Close()
         excel.Application.Quit()
@@ -36,25 +38,24 @@ class DataPreprocessor:
     def findHead_row(self):
         output_file_path = os.path.join(self.out_put_folder, self.output_file_name)
         print("output_file_path", output_file_path)
-        df = pd.read_excel(output_file_path)
-        print("here", df.head())
-        count = 0
-        for index, row in df.iterrows():
-            print(index)
-            for item in row:
-                if pd.isnull(item) or item == '':
-                    pass
-                    # print(f'项 "{item}" 是空的')
-                else:
-                    count += 1
-                    if count == len(row):
-                        print(count)
-                        print(index)
-                        return index
+        df = pd.read_excel(output_file_path, header=None)
+        num_rows = len(df)
+        num_cols = len(df.columns)
+        # print("here", df.head())
+        for index in range(num_rows):
+            # print(index)
+            count = 0
+            row = df.iloc[index]
+            print(row)
+            count = row.count()
+            if count == num_cols:
+                print(f"index:{index}")
+                print(f"count:{count}")
+                return index
 
     def delete_null_rows(self, head_row):
         output_file_path = os.path.join(self.out_put_folder, self.output_file_name)
-        df = pd.read_excel(output_file_path)
+        df = pd.read_excel(output_file_path, header=None)
         new_header = df.iloc[head_row]
         head_row = head_row + 1
         df = df[head_row:]

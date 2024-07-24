@@ -42,13 +42,17 @@ def test(file_path, table_name):
     print("文件路径："+file_path)
     file_name = os.path.basename(file_path)
     file_txt = os.path.splitext(file_name)[0]
+    output_file_name = f"{file_txt}.xlsx"
+    out_put_folder = r'C:\Users\Admin\Desktop\process'
+    output_file_path = os.path.join(out_put_folder, output_file_name)
+
     file_preprocessor = DataPreprocessor(
-        file_path, file_name, r'C:\Users\Admin\Desktop\process', file_txt)
+        file_path, file_name, out_put_folder, file_txt)
     file_preprocessor.preprocess()
     print("预处理完成")
 
     table_inserter = TableInserter(
-        file_path,
+        output_file_path,
         'root',
         '111111',
         '192.168.10.207',
